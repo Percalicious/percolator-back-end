@@ -13,7 +13,7 @@ class User extends Lucid {
   }
 
   events () {
-    return this.hasMany('App/Model/Todo')
+    return this.hasMany('App/Model/Event')
   }
 
 }
