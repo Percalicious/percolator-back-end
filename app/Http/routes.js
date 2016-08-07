@@ -18,3 +18,12 @@
 const Route = use('Route')
 
 Route.on('/').render('welcome')
+
+// User Registration & Login
+Route.post('/register', 'UserController.store')
+Route.post('/login', 'UserController.login')
+Route.get('/profile', 'UserController.show').middleware('auth')
+
+// Routes for Events
+Route.get('/events', 'EventController.index').middleware('auth')
+Route.post('/events', 'EventController.store').middleware('auth')
