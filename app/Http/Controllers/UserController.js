@@ -20,16 +20,16 @@ class UserController {
   }
 
   * login (request, response) {
-    // Receive input from the user
+    // Receive login input from user
     const input = request.only('email', 'password');
 
     try {
       // Find the user by email
       const user = yield User.findBy('email', input.email);
-      // Verify their passwords matches & if not, let em know
+      // Verify the password matches the user. If not, error message.
       const verify = yield Hash.verify(input.password, user.password);
-      if (!verify) { throw new Error('Password mismatch') };
-      // Generate a token
+      if (!verify) { throw new Error('Incorrect password') };
+      // Generate access token
       user.access_token = yield request.auth.generate(user);
 
       return response.json(user.toJSON());
