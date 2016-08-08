@@ -4,21 +4,25 @@ const Lucid = use('Lucid')
 
 class User extends Lucid {
 
-  static get hidden () {
+  static get hidden() {
     return ['password']
   }
 
-  apiTokens () {
+  apiTokens() {
     return this.hasMany('App/Model/Token')
   }
 
-  events () {
+  events() {
     return this.hasMany('App/Model/Event')
   }
 
-  // users () {
-  //   return this.hasMany('App/Model/Guest')
-  // }
+  guests() {
+    return this.hasMany('App/Model/Guest')
+  }
+
+  address() {
+    return this.hasOne('App/Model/Address')
+  }
 
 }
 module.exports = User
