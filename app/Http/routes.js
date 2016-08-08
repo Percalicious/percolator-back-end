@@ -25,5 +25,7 @@ Route.post('/login', 'UserController.login')
 Route.get('/profile', 'UserController.show').middleware('auth')
 
 // Routes for Events
-Route.get('/events', 'EventController.index').middleware('auth')
-Route.post('/events', 'EventController.store').middleware('auth')
+Route.get('/events', 'EventController.index')
+Route.post('/events', 'EventController.store')
+// Route.get('/events', 'EventController.index').middleware('auth')
+// Route.post('/events', 'EventController.store').middleware('auth')

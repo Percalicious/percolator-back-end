@@ -16,5 +16,9 @@ class User extends Lucid {
     return this.hasMany('App/Model/Event')
   }
 
+  // users () {
+  //   return this.hasMany('App/Model/Guest')
+  // }
+
 }
 module.exports = User
