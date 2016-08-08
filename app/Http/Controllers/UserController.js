@@ -11,7 +11,7 @@ class UserController {
 
   * store (request, response) {
     // Takes user input & hashes the password
-    const input = request.only('email', 'password', 'firstName', 'lastName', 'mobileNumber', 'homeNumber', 'streetAddress', 'city', 'state', 'postCode', 'organization', 'category');
+    const input = request.all();
     input.password = yield Hash.make(input.password);
     // Create a new user
     const user = yield User.create(input);
