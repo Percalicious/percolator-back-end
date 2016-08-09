@@ -8,6 +8,14 @@ class User extends Lucid {
     return ['password']
   }
 
+  static get rules () {
+        return {
+            email: 'required|email|unique:users',
+            password: 'required',
+        }
+    }
+
+
   apiTokens() {
     return this.hasMany('App/Model/Token')
   }
