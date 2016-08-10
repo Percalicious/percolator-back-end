@@ -2,23 +2,17 @@
 
 const Schema = use('Schema')
 
-class UserSchema extends Schema {
+class UsersSchema extends Schema {
 
   up () {
     this.create('users', (table) => {
       table.increments()
       table.string('email', 254).notNullable().unique()
       table.string('password', 60).notNullable()
-      table.string('firstname')
-      table.string('lastname')
-      table.string('mobileNumber')
-      table.string('homeNumber')
-      table.string('streetAddress')
-      table.string('city')
-      table.string('state')
-      table.string('postCode')
-      table.string('organization')
-      table.string('category')
+      table.string('first_name');
+      table.string('home_number');
+      table.string('last_name');
+      table.string('mobile_number');
       table.timestamps()
     })
   }
@@ -29,4 +23,4 @@ class UserSchema extends Schema {
 
 }
 
-module.exports = UserSchema
+module.exports = UsersSchema
