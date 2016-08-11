@@ -13,6 +13,8 @@ class UsersSchema extends Schema {
       table.string('home_number');
       table.string('last_name');
       table.string('mobile_number');
+      table.string('organization')
+      table.string('category')
       table.timestamps()
     })
   }
