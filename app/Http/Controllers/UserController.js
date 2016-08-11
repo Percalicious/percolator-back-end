@@ -1,6 +1,7 @@
 'use strict';
 
 const User = use('App/Model/User')
+const Address = use('App/Model/Address')
 const Hash = use('Hash')
 const Validator = use('Validator')
 
@@ -11,10 +12,13 @@ class UserController {
   }
 
   * store(request, response) {
+    const userData = request.only('first_name', 'last_name', 'email', 'password', 'home_number', 'mobile_number', 'organization', 'category', 'photo_url');
+    const addressData = request.only('street', 'street_2', 'city', 'state', 'post_code');
+
+    const validation = yield Validator.validate(userData, User.rules);
     // Takes user input & hashes the password
-    const input = request.all();
-    const validation = yield Validator.validate(input, User.rules);
-    input.password = yield Hash.make(input.password);
+    userData.password = yield Hash.make(userData.password);
+
 
     try {
       // if/else runs unique username validation
@@ -24,8 +28,9 @@ class UserController {
         return
       // if validation does not fail, create new user
       } else {
-        const user = yield User.create(input);
-        // Respond with updated user information in JSON object
+        const user = yield User.create(userData);
+        const user = yield Address.create(addressData);
+        // Respond with updated user and address information in JSON object
         return response.status(201).json(user.toJSON());
       }
     }
