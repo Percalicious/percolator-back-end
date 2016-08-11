@@ -12,10 +12,6 @@ class Guest extends Lucid {
     return this.hasMany('App/Model/EventGuest')
   }
 
-  address() {
-    return this.hasOne('App/Model/Address')
-  }
-
   weinfo() {
     return this.hasOne('App/Model/WeInfo')
   }

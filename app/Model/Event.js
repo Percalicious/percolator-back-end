@@ -11,9 +11,5 @@ class Event extends Lucid {
     return this.hasMany('App/Model/EventGuest')
   }
 
-  address() {
-    return this.hasOne('App/Model/Address')
-  }
-
 }
 module.exports = Event;

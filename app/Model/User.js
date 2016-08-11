@@ -27,10 +27,6 @@ class User extends Lucid {
   guests() {
     return this.hasMany('App/Model/Guest')
   }
-
-  address() {
-    return this.hasOne('App/Model/Address')
-  }
-
+  
 }
 module.exports = User
