@@ -10,12 +10,32 @@ class EventController {
   }
 
   * store (request, response) {
-    // Takes event input
-    const input = request.all();
+
     // Create a new event
     const event = yield Event.create(input);
     // Respond with updated event information in JSON object
     return response.json(event.toJSON());
+  }
+
+
+  * store(request, response) {
+    // Takes event input
+    const eventInfo = request.all();
+
+    try {
+// ********************************************
+        // eventInfo.user_id = somehow get the user ID and set it here
+// ********************************************
+        const newEvent = yield Event.create(eventInfo);
+        // Respond with updated user and address information in JSON object
+        return response.status(201).json(newEvent.toJSON());
+      }
+    } catch (e) {
+      //  hit if there is a major error saving to the database
+      return response.status(400).json({
+        error: e.message
+      });
+    }
   }
 
 }
