@@ -12,33 +12,33 @@ class UserController {
   }
 
   * store(request, response) {
-    const userData = request.only('first_name', 'last_name', 'email', 'password', 'home_number', 'mobile_number', 'organization', 'category', 'photo_url');
+    const userData = request.only('first_name', 'last_name', 'email', 'password', 'home_number', 'mobile_number', 'organization', 'category', 'photo_url', 'address_id');
     const addressData = request.only('street', 'street_2', 'city', 'state', 'post_code');
 
     const validation = yield Validator.validate(userData, User.rules);
     // Takes user input & hashes the password
     userData.password = yield Hash.make(userData.password);
 
-
     try {
-      // if/else runs unique username validation
+      // if/else runs unique email validation
       // if validation fails, return error message
       if (validation.fails()) {
         response.status(422).json(validation.messages())
         return
-      // if validation does not fail, create new user
+        // if validation does not fail, create new user
       } else {
-        const user = yield User.create(userData);
-        const user = yield Address.create(addressData);
+        const newAddress = yield Address.create(addressData);
+        userData.address_id = newAddress.id;
+        const newUser = yield User.create(userData);
+
         // Respond with updated user and address information in JSON object
-        return response.status(201).json(user.toJSON());
+        return response.status(201).json(newUser.toJSON());
       }
-    }
-    catch (e) {
-     //  hit if there is a major error saving to the database
-     return response.status(418).json({
-       error: e.message
-     });
+    } catch (e) {
+      //  hit if there is a major error saving to the database
+      return response.status(418).json({
+        error: e.message
+      });
     }
   }
 
