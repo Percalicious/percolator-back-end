@@ -6,7 +6,8 @@ class EventsAddDontaionAmountFieldsSchema extends Schema {
 
   up () {
     this.table('events', (table) => {
-      // alter events table
+      table.string('suggest_donation');
+      table.string('per_plate');
     })
   }
 
