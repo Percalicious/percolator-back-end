@@ -6,8 +6,9 @@ const User = use('App/Model/User');
 class EventController {
 
   * index (request, response) {
-    let events = yield Event.all();
-    yield response.json(events.toJSON());
+    const user = yield User.findBy('id', request.authUser.id);
+    const events = yield user.events().fetch();
+    return response.json(events.toJSON());
   }
 
   * store(request, response) {

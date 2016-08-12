@@ -8,6 +8,7 @@ class UserController {
 
   * show(request, response) {
     console.log(request.authUser);
+    
     return response.json(request.authUser);
   }
 
