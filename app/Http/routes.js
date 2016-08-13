@@ -13,6 +13,7 @@ Route.get('/profile', 'UserController.show').middleware('auth')
 // Routes for Events
 // Route.get('/events', 'EventController.index')
 Route.get('/events', 'EventController.index').middleware('auth')
+Route.delete('/events', 'EventController.delete').middleware('auth')
 // Route.post('/event-create', 'EventController.store')
 Route.post('/event-create', 'EventController.store').middleware('auth')
 

@@ -27,6 +27,14 @@ class EventController {
     }
   }
 
+  * delete (request, response) {
+    console.log(request.route);
+
+    // const user = yield User.findBy('id', request.authUser.id);
+    // const events = yield user.events().fetch();
+    // return response.json(events.toJSON());
+  }
+
 }
 
 module.exports = EventController;
