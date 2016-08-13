@@ -27,12 +27,16 @@ class EventController {
     }
   }
 
-  * delete (request, response) {
-    console.log(request.route);
+  * userSingleEvent (request, response) {
+    let singleEvent = yield Event.findBy('id', request.param('id'));
+    return response.json(singleEvent.toJSON());
+  }
 
-    // const user = yield User.findBy('id', request.authUser.id);
-    // const events = yield user.events().fetch();
-    // return response.json(events.toJSON());
+  * destroy (request, response) {
+    console.log('On backend destroy');
+    let deleteEvent = yield Event.findBy('id', request.param('id'));
+    yield deleteEvent.delete();
+    yield response.json({ success: true });
   }
 
 }

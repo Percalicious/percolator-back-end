@@ -7,15 +7,22 @@ Route.on('/').render('welcome')
 // User Registration & Login
 Route.post('/register', 'UserController.store')
 Route.post('/login', 'UserController.login')
-// Route.get('/profile', 'UserController.show')
 Route.get('/profile', 'UserController.show').middleware('auth')
 
 // Routes for Events
-// Route.get('/events', 'EventController.index')
-Route.get('/events', 'EventController.index').middleware('auth')
-Route.delete('/events', 'EventController.delete').middleware('auth')
-// Route.post('/event-create', 'EventController.store')
+
+// Create event for logged in/authorized user
 Route.post('/event-create', 'EventController.store').middleware('auth')
+// All events for single user
+Route.get('/my-events', 'EventController.index').middleware('auth')
+
+// Single host view of event for a single user
+Route.get('host/my-events/:id', 'EventController.userSingleEvent').middleware('auth')
+// Route.get('host/my-events/:id', 'EventController.userSingleEvent')
+
+// Delete single event for a single user
+Route.delete('host/my-events/:id', 'EventController.destroy').middleware('auth')
+// Route.delete('host/my-events:id', 'EventController.destroy')
 
 // Routes for Guests
 Route.get('/guests', 'GuestController.index')
