@@ -14,7 +14,9 @@ class EventController {
   * store(request, response) {
     // Takes event input
     const eventInfo = request.all();
+
     try {
+      console.log(eventInfo);
         eventInfo.user_id = request.authUser.id;
         const newEvent = yield Event.create(eventInfo);
         // Respond with updated user and address information in JSON object

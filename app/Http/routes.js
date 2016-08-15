@@ -12,6 +12,7 @@ Route.get('/profile', 'UserController.show').middleware('auth')
 // Routes for Events
 
 // Create event for logged in/authorized user
+// Route.post('/event-create', 'EventController.store')
 Route.post('/event-create', 'EventController.store').middleware('auth')
 // All events for single user
 Route.get('/my-events', 'EventController.index').middleware('auth')
