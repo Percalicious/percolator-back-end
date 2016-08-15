@@ -74,10 +74,6 @@ const aliases = {
   Middleware: 'Adonis/Src/Middleware',
   Route: 'Adonis/Src/Route',
   Schema: 'Adonis/Src/Schema',
-<<<<<<< HEAD
-=======
-  Validator: 'Adonis/Addons/Validator',
->>>>>>> dae0e81e19377b8f52d5f2c1940589a4ea0c465f
   View: 'Adonis/Src/View'
 }
 
