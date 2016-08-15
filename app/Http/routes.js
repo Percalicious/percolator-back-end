@@ -9,6 +9,7 @@ Route.post('/register', 'UserController.store')
 Route.post('/login', 'UserController.login')
 Route.get('/profile', 'UserController.show').middleware('auth')
 Route.post('/', 'EventController.sendEmail')
+Route.post('/runwe', 'EventController.runWEReport')
 
 // Routes for Events
 
