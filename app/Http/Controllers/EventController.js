@@ -48,12 +48,10 @@ class EventController {
   }
 
   * sendEmail (request, response) {
-      let data = request;
-        mailgun.messages().send(data, function(error, body){
+        mailgun.messages().send(request._body, function(error, body){
           console.log(body);
         });
         console.log(response);
-        return response;
   }
 
 }
