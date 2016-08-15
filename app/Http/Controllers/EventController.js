@@ -2,6 +2,12 @@
 
 const Event = use('App/Model/Event');
 const User = use('App/Model/User');
+const Env = use('Env');
+
+var api_key = Env.get('MAILGUN_TOKEN');
+var domainFill = 'mg.javahuddle.com';
+
+var mailgun = require ('mailgun-js') ({apiKey: api_key, domain: domainFill});
 
 class EventController {
 
@@ -39,6 +45,15 @@ class EventController {
     let deleteEvent = yield Event.findBy('id', request.param('id'));
     yield deleteEvent.delete();
     yield response.json({ success: true });
+  }
+
+  * sendEmail (request, response) {
+      let data = request;
+        mailgun.messages().send(data, function(error, body){
+          console.log(body);
+        });
+        console.log(response);
+        return response;
   }
 
 }
