@@ -70,5 +70,4 @@ module.exports = {
   connection: Env.get('DATABASE_URL')
 }
 
-
 }
