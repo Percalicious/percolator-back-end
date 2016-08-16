@@ -68,13 +68,13 @@ class EventController {
       },
       body: frontEndRequest._body
     },
-    function (error, response, body) {
+    function (error, innerResponse, body) {
       if (error) {
         return console.error('upload failed:', error);
       }
       console.log('Upload successful!  Server responded with:');
       console.log(body);
-      yield body;
+      response.send(body);
   })
   }
 }
