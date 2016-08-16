@@ -3,6 +3,7 @@
 const Event = use('App/Model/Event');
 const User = use('App/Model/User');
 const Env = use('Env');
+var request = require('request');
 var rp = require('request-promise');
 var api_key = Env.get('MAILGUN_TOKEN');
 var domainFill = 'mg.javahuddle.com';
@@ -54,27 +55,27 @@ class EventController {
         console.log(response);
   }
 
-  * runWEReport(request, response) {
-      console.log('request._body:');
-      console.log(request._body);
-      var options = {
-        uri: "https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full",
-        json: true,
-        headers: {
-          Authorization: 'APIKey '+Env.get('WEALTHENGINE_TOKEN')
-        },
-        body: request._body
-      }
+  * runWEReport(frontEndRequest, response) {
+      console.log('frontEndRequest._body:');
+      console.log(frontEndRequest._body);
 
-      rp(options).then(function(error, response, payload){
-        console.log(error);
-        console.log(response);
-        console.log(payload);
-        log('WE API Status: ', response.statusCode);
-        log('Headers: ', JSON.stringify(response.headers));
-        log('Response: ', payload);
-        we_response = payload;
-      });
+    request({
+      method: 'POST',
+      uri: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
+      json: true,
+      headers: {
+        Authorization: 'APIKey '+Env.get('WEALTHENGINE_TOKEN')
+      },
+      body: frontEndRequest._body
+    },
+    function (error, response, body) {
+      if (error) {
+        return console.error('upload failed:', error);
+      }
+      console.log('Upload successful!  Server responded with:');
+      console.log(body);
+      yield body;
+  })
   }
 }
 
