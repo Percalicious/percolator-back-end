@@ -8,7 +8,7 @@ class UserController {
 
   * show(request, response) {
     console.log(request.authUser);
-    
+
     return response.json(request.authUser);
   }
 
@@ -40,6 +40,7 @@ class UserController {
 
   * login(request, response) {
     // Receive login input from user
+    console.log(request);
     const input = request.only('email', 'password');
 
     try {
