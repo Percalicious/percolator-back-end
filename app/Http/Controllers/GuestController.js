@@ -9,10 +9,40 @@ class GuestController {
     yield response.json(guests.toJSON());
   }
 
-  * store (request, response) {
-    const input = request.all();
-    const guest = yield Guest.create(input);
-    return response.json(guest.toJSON());
+  // * store (request, response) {
+  //   const guestInfo = request.all();
+  //
+  //       try {
+  //         console.log(guestInfo);
+  //           guestInfo.event_id = request.event.id;
+  //           const newGuest = yield Guest.create(guestInfo);
+  //           // Respond with updated user and address information in JSON object
+  //           return response.status(201).json(newGuest.toJSON());
+  //       } catch (e) {
+  //         //  hit if there is a major error saving to the database
+  //         return response.status(400).json({
+  //           error: e.message
+  //         });
+  //       }
+  // }
+
+
+  * store(request, response) {
+    // Takes guest input
+    const guestInfo = request.only('city', 'email', 'first_name', 'home_number', 'last_name', 'mobile_number', 'post_code', 'state', 'street', 'street_2');
+
+    try {
+        guestInfo.user_id = request.authUser.id;
+        const newGuest = yield Guest.create(guestInfo);
+        // Respond with updated user and address information in JSON object
+        console.log(newGuest);
+        return response.status(201).json(newGuest.toJSON());
+    } catch (e) {
+      //  hit if there is a major error saving to the database
+      return response.status(400).json({
+        error: e.message
+      });
+    }
   }
 
 }

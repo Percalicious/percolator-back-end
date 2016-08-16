@@ -8,8 +8,6 @@ Route.on('/').render('welcome')
 Route.post('/register', 'UserController.store')
 Route.post('/login', 'UserController.login')
 Route.get('/profile', 'UserController.show').middleware('auth')
-Route.post('/', 'EventController.sendEmail')
-Route.post('/runwe', 'EventController.runWEReport')
 
 // Routes for Events
 
@@ -27,8 +25,18 @@ Route.get('host/my-events/:id', 'EventController.userSingleEvent').middleware('a
 Route.delete('host/my-events/:id', 'EventController.destroy').middleware('auth')
 // Route.delete('host/my-events:id', 'EventController.destroy')
 
+// Send email to single invited guest
+Route.post('/', 'EventController.sendEmail')
+
+// Run WE report for single RSVPed guest
+Route.post('/runwe', 'EventController.runWEReport')
+
+//Create the EventGuest relationship
+Route.post('/createEventGuest', 'EventGuestController.createEventGuest')
+
+
 // Routes for Guests
 Route.get('/guests', 'GuestController.index')
-Route.post('/guests', 'GuestController.store')
+Route.post('/guests', 'GuestController.store').middleware('auth')
 // Route.get('/guests', 'GuestController.index').middleware('auth')
 // Route.post('/guests', 'GuestController.store').middleware('auth')
