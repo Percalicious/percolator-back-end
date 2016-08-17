@@ -33,6 +33,7 @@ Route.post('/runwe', 'EventController.runWEReport')
 
 //Create the EventGuest relationship
 Route.post('/createEventGuest', 'EventGuestController.createEventGuest')
+Route.get('/event-guest/rsvp/:id', 'EventGuestController.guestEventView')
 
 
 // Routes for Guests
