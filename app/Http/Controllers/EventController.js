@@ -19,6 +19,7 @@ class EventController {
   }
 
   * store(request, response) {
+    console.log(request);
     // Takes event input
     const eventInfo = request.all();
 
