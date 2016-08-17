@@ -1,84 +1,55 @@
 'use strict';
 
-const Event = use('App/Model/Event');
-const User = use('App/Model/User');
-const Env = use('Env');
-var request = require('request');
-var rp = require('request-promise');
-var api_key = Env.get('MAILGUN_TOKEN');
-var domainFill = 'mg.javahuddle.com';
-
-var mailgun = require ('mailgun-js') ({apiKey: api_key, domain: domainFill});
+// const Event = use('App/Model/Event');
+// const User = use('App/Model/User');
+const EventGuest = use('App/Model/EventGuest');
 
 class EventGuestController {
 
-  * createEventGuest (request, response) {
-    const eventGuestInfo = request.only(all);
-    console.log(eventGuestInfo);
-    // const user = yield User.findBy('id', request.authUser.id);
-    // const events = yield user.events().fetch();
-    // return response.json(events.toJSON());
-  }
 
-  * store(request, response) {
-    // Takes event input
-    const eventInfo = request.all();
+
+  // function generateUUID() {
+  //   console.log('Inside UUID');
+  //     var d = new Date().getTime();
+  //     if(window.performance && typeof window.performance.now === "function"){
+  //         d += performance.now();; //use high-precision timer if available
+  //     }
+  //     var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+  //         var r = (d + Math.random()*16)%16 | 0;
+  //         d = Math.floor(d/16);
+  //         return (c=='x' ? r : (r&0x3|0x8)).toString(16);
+  //     });
+  //     return uuid;
+  // };
+
+
+  * createEventGuest (request, response) {
+    // Recives payload object from FE and sets local variable
+    let eventGuest = request.only('eventID', 'guestInfo');
+
+    eventGuest = {
+      guest_id: eventGuest.guestInfo.id,
+      event_id: eventGuest.eventID,
+      rsvp: "Not responded",
+      rsvp_details: "",
+      followed_up: false
+    }
+
+    console.log(eventGuest);
 
     try {
-      console.log(eventInfo);
-        // eventInfo.user_id = request.authUser.id;
-        // const newEvent = yield Event.create(eventInfo);
-        // // Respond with updated user and address information in JSON object
-        // return response.status(201).json(newEvent.toJSON());
+        const newEventGuest = yield EventGuest.create(eventGuest);
+        // Respond with updated user and address information in JSON object
+        console.log(newEventGuest);
+        return response.status(201).json(newEventGuest.toJSON());
     } catch (e) {
       //  hit if there is a major error saving to the database
-      // return response.status(400).json({
-      //   error: e.message
-      // });
+      return response.status(400).json({
+        error: e.message
+      });
     }
   }
 
-  // * userSingleEvent (request, response) {
-  //   let singleEvent = yield Event.findBy('id', request.param('id'));
-  //   return response.json(singleEvent.toJSON());
-  // }
-  //
-  // * destroy (request, response) {
-  //   console.log('On backend destroy');
-  //   let deleteEvent = yield Event.findBy('id', request.param('id'));
-  //   yield deleteEvent.delete();
-  //   yield response.json({ success: true });
-  // }
-  //
-  // * sendEmail (request, response) {
-  //       mailgun.messages().send(request._body, function(error, body){
-  //         console.log(body);
-  //       });
-  //       console.log(response);
-  // }
-  //
-  // * runWEReport(frontEndRequest, response) {
-  //     console.log('frontEndRequest._body:');
-  //     console.log(frontEndRequest._body);
-  //
-  //   request({
-  //     method: 'POST',
-  //     uri: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
-  //     json: true,
-  //     headers: {
-  //       Authorization: 'APIKey '+Env.get('WEALTHENGINE_TOKEN')
-  //     },
-  //     body: frontEndRequest._body
-  //   },
-  //   function (error, innerResponse, body) {
-  //     if (error) {
-  //       return console.error('upload failed:', error);
-  //     }
-  //     console.log('Upload successful!  Server responded with:');
-  //     console.log(body);
-  //     response.send(body);
-  // })
-  // }
 }
 
 module.exports = EventGuestController;
