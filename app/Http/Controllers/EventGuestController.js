@@ -1,5 +1,5 @@
 'use strict';
-
+const crypto = require('crypto');
 const EventGuest = use('App/Model/EventGuest');
 
 class EventGuestController {
@@ -15,10 +15,13 @@ class EventGuestController {
       rsvp_details: "",
       followed_up: false
     }
+
+    let buf = crypto.randomBytes(30);
+    eventGuest.uuid = buf.toString('hex');
+    // Should add functionality to check for wildly statistically improbable duplicate uuid
     try {
       const newEventGuest = yield EventGuest.create(eventGuest);
       // Respond with updated user and address information in JSON object
-      console.log(newEventGuest.id);
       return response.status(201).json(newEventGuest.toJSON());
     } catch (e) {
       //  hit if there is a major error saving to the database
@@ -32,10 +35,8 @@ class EventGuestController {
     // let eventGuest = request.all();
     // console.log(request);
     return response;
-
   }
-
-
+  
 }
 
 
