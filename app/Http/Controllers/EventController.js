@@ -15,11 +15,21 @@ class EventController {
   * index (request, response) {
     const user = yield User.findBy('id', request.authUser.id);
     const events = yield user.events().fetch();
+
+
+    let eventInfo = events.map(events.id);
+
+    // console.log("Events *********************************************")
+    // console.log(events);
+    // console.log("Events After Stuff *********************************************")
+    // console.log(eventInfo);
+
+
     return response.json(events.toJSON());
   }
 
   * store(request, response) {
-    console.log(request);
+    // console.log(request);
     // Takes event input
     const eventInfo = request.all();
 
@@ -39,7 +49,39 @@ class EventController {
 
   * userSingleEvent (request, response) {
     let singleEvent = yield Event.findBy('id', request.param('id'));
-    return response.json(singleEvent.toJSON());
+    let rsvpInfo = yield singleEvent.event_guest().fetch();
+
+    let totalResp = {
+      eventInfo: singleEvent,
+      yes: 0,
+      no: 0,
+      maybe: 0,
+      not_responded: 0,
+      invites: 0
+    }
+
+    rsvpInfo.forEach(function(guestObj){
+
+      if(guestObj.rsvp === "Yes"){
+        totalResp.yes++;
+        totalResp.invites++
+      } else if (guestObj.rsvp === "No"){
+        totalResp.no++;
+        totalResp.invites++
+      } else if (guestObj.rsvp === "Maybe"){
+        totalResp.maybe++
+        totalResp.invites++
+      } else if (guestObj.rsvp === "Not responded"){
+        totalResp.not_responded++
+        totalResp.invites++
+      }
+    })
+
+    console.log("****************************");
+    console.log(totalResp);
+
+
+    return response.json(totalResp);
   }
 
   * destroy (request, response) {
