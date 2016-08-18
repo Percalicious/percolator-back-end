@@ -4,11 +4,11 @@ const Lucid = use('Lucid')
 
 class EventGuest extends Lucid {
 
-  events() {
+  event() {
     return this.belongsTo('App/Model/Event')
   }
 
-  guests() {
+  guest() {
     return this.belongsTo('App/Model/Guest')
   }
 

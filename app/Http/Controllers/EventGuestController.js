@@ -1,6 +1,8 @@
 'use strict';
 const crypto = require('crypto');
 const EventGuest = use('App/Model/EventGuest');
+const Guest = use('App/Model/Guest');
+;
 
 class EventGuestController {
 
@@ -32,11 +34,33 @@ class EventGuestController {
   }
 
   * guestEventView(request, response) {
+
     // let eventGuest = request.all();
-    // console.log(request);
+    console.log(request);
     return response;
   }
-  
+
+  * guestEventUpdate(request, response) {
+    let eg = request.only('egInfo');
+    let g = request.only('guestInfo');
+    let uuid = request.param('uuid');
+
+    let eventGuest = yield EventGuest.findBy('uuid', uuid);
+    if (eg.egInfo.rsvp != '' || null || undefined){eventGuest.rsvp = eg.egInfo.rsvp};
+    if (eg.egInfo.rsvp_details != '' || null || undefined){eventGuest.rsvp_details = eg.egInfo.rsvp_details};
+    yield eventGuest.save();
+
+    let guest = yield Guest.findBy('id', eventGuest.guest_id)
+    if (g.guestInfo.street != '' || null || undefined){guest.street = g.guestInfo.street};
+    if (g.guestInfo.street_2 != '' || null || undefined){guest.street_2 = g.guestInfo.street_2};
+    if (g.guestInfo.city != '' || null || undefined){guest.city = g.guestInfo.city};
+    if (g.guestInfo.state != '' || null || undefined){guest.state = g.guestInfo.state};
+    if (g.guestInfo.post_code != '' || null || undefined){guest.post_code = g.guestInfo.post_code};
+    if (g.guestInfo.home_number != '' || null || undefined){guest.home_number = g.guestInfo.home_number};
+    if (g.guestInfo.mobile_number != '' || null || undefined){guest.mobile_number = g.guestInfo.mobile_number};
+    yield guest.save();
+  }
+
 }
 
 
