@@ -59,6 +59,8 @@ class EventGuestController {
     if (g.guestInfo.home_number != '' || null || undefined){guest.home_number = g.guestInfo.home_number};
     if (g.guestInfo.mobile_number != '' || null || undefined){guest.mobile_number = g.guestInfo.mobile_number};
     yield guest.save();
+
+    return response.json;
   }
 
 }

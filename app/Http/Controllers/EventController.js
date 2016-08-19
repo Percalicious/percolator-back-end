@@ -1,7 +1,9 @@
 'use strict';
 
 const Event = use('App/Model/Event');
+const Guest = use('App/Model/Guest');
 const User = use('App/Model/User');
+const EventGuest = use('App/Model/EventGuest');
 const Env = use('Env');
 var request = require('request');
 var rp = require('request-promise');
@@ -34,7 +36,7 @@ class EventController {
     const eventInfo = request.all();
 
     try {
-      console.log(eventInfo);
+      // console.log(eventInfo);
         eventInfo.user_id = request.authUser.id;
         const newEvent = yield Event.create(eventInfo);
         // Respond with updated user and address information in JSON object
@@ -50,8 +52,21 @@ class EventController {
   * userSingleEvent (request, response) {
     let singleEvent = yield Event.findBy('id', request.param('id'));
     let rsvpInfo = yield singleEvent.event_guest().fetch();
+    let guestsOfEvent = yield EventGuest.query().where('event_id', request.param('id')).fetch();
+    let selectedGuests = guestsOfEvent.toJSON().map(function(eventGuestObj){
+      // console.log("eventGuestObj.guest_id")
+      // console.log(eventGuestObj.guest_id);
+      return eventGuestObj.guest_id;
+    });
+    let allGuests = yield Guest.query().whereIn('id', selectedGuests);
+    console.log('selectedGuests');
+    console.log(selectedGuests);
+    // console.log("Guests of Event **************************************************");
+    // console.log(guestsOfEvent);
+
 
     let totalResp = {
+      allGuests: allGuests,
       eventInfo: singleEvent,
       yes: 0,
       no: 0,
@@ -77,15 +92,11 @@ class EventController {
       }
     })
 
-    console.log("****************************");
-    console.log(totalResp);
-
-
     return response.json(totalResp);
   }
 
   * destroy (request, response) {
-    console.log('On backend destroy');
+    // console.log('On backend destroy');
     let deleteEvent = yield Event.findBy('id', request.param('id'));
     yield deleteEvent.delete();
     yield response.json({ success: true });
@@ -93,14 +104,14 @@ class EventController {
 
   * sendEmail (request, response) {
         mailgun.messages().send(request._body, function(error, body){
-          console.log(body);
+          // console.log(body);
         });
-        console.log(response);
+        // console.log(response);
   }
 
   * runWEReport(frontEndRequest, response) {
-      console.log('frontEndRequest._body:');
-      console.log(frontEndRequest._body);
+      // console.log('frontEndRequest._body:');
+      // console.log(frontEndRequest._body);
 
     request({
       method: 'POST',
@@ -115,8 +126,8 @@ class EventController {
       if (error) {
         return console.error('upload failed:', error);
       }
-      console.log('Upload successful!  Server responded with:');
-      console.log(body);
+      // console.log('Upload successful!  Server responded with:');
+      // console.log(body);
       response.send(body);
   })
   }
