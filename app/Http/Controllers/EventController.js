@@ -18,25 +18,16 @@ class EventController {
     const user = yield User.findBy('id', request.authUser.id);
     const events = yield user.events().fetch();
 
-
     let eventInfo = events.map(events.id);
-
-    // console.log("Events *********************************************")
-    // console.log(events);
-    // console.log("Events After Stuff *********************************************")
-    // console.log(eventInfo);
-
 
     return response.json(events.toJSON());
   }
 
   * store(request, response) {
-    // console.log(request);
     // Takes event input
     const eventInfo = request.all();
 
     try {
-      // console.log(eventInfo);
         eventInfo.user_id = request.authUser.id;
         const newEvent = yield Event.create(eventInfo);
         // Respond with updated user and address information in JSON object
@@ -54,49 +45,19 @@ class EventController {
     let rsvpInfo = yield singleEvent.event_guest().fetch();
     let guestsOfEvent = yield EventGuest.query().where('event_id', request.param('id')).fetch();
     let selectedGuests = guestsOfEvent.toJSON().map(function(eventGuestObj){
-      // console.log("eventGuestObj.guest_id")
-      // console.log(eventGuestObj.guest_id);
       return eventGuestObj.guest_id;
     });
     let allGuests = yield Guest.query().whereIn('id', selectedGuests);
-    console.log('selectedGuests');
-    console.log(selectedGuests);
-    // console.log("Guests of Event **************************************************");
-    // console.log(guestsOfEvent);
-
 
     let totalResp = {
       allGuests: allGuests,
       eventInfo: singleEvent,
-      yes: 0,
-      no: 0,
-      maybe: 0,
-      not_responded: 0,
-      invites: 0
+      rsvpInfo: rsvpInfo
     }
-
-    rsvpInfo.forEach(function(guestObj){
-
-      if(guestObj.rsvp === "Yes"){
-        totalResp.yes++;
-        totalResp.invites++
-      } else if (guestObj.rsvp === "No"){
-        totalResp.no++;
-        totalResp.invites++
-      } else if (guestObj.rsvp === "Maybe"){
-        totalResp.maybe++
-        totalResp.invites++
-      } else if (guestObj.rsvp === "Not responded"){
-        totalResp.not_responded++
-        totalResp.invites++
-      }
-    })
-
     return response.json(totalResp);
   }
 
   * destroy (request, response) {
-    // console.log('On backend destroy');
     let deleteEvent = yield Event.findBy('id', request.param('id'));
     yield deleteEvent.delete();
     yield response.json({ success: true });
