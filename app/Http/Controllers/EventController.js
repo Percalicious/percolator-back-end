@@ -87,8 +87,9 @@ class EventController {
       if (error) {
         return console.error('upload failed:', error);
       }
-      // console.log('Upload successful!  Server responded with:');
-      // console.log(body);
+      console.log('Upload successful!  Server responded with:');
+
+      // Following line works for return to front end************************
       response.send(body);
   })
   }

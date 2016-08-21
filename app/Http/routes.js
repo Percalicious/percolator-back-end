@@ -39,5 +39,7 @@ Route.post('/event-guest/rsvp/:uuid', 'EventGuestController.guestEventUpdate')
 // Routes for Guests
 Route.get('/guests', 'GuestController.index')
 Route.post('/guests', 'GuestController.store').middleware('auth')
+Route.post('/guests/we-report', 'GuestController.saveWEReport')
+Route.get('/guests/we-report', 'GuestController.fetchWEReport')
 // Route.get('/guests', 'GuestController.index').middleware('auth')
 // Route.post('/guests', 'GuestController.store').middleware('auth')
