@@ -2,7 +2,7 @@
 const crypto = require('crypto');
 const EventGuest = use('App/Model/EventGuest');
 const Guest = use('App/Model/Guest');
-;
+const Event = use('App/Model/Event');
 
 class EventGuestController {
 
@@ -34,10 +34,14 @@ class EventGuestController {
   }
 
   * guestEventView(request, response) {
-
-    // let eventGuest = request.all();
-    // console.log(request);
-    return response;
+    // console.log("Inside guestEventView");
+    let uuid = request.param('uuid');
+    // console.log(uuid);
+    let eventGuest = yield EventGuest.findBy('uuid', uuid);
+    let event = yield Event.findBy('id', eventGuest.event_id);
+    // console.log('event');
+    console.log(event);
+    return response.json(event);
   }
 
   * guestEventUpdate(request, response) {
@@ -50,7 +54,7 @@ class EventGuestController {
     if (eg.egInfo.rsvp_details != '' || null || undefined){eventGuest.rsvp_details = eg.egInfo.rsvp_details};
     yield eventGuest.save();
 
-    let guest = yield Guest.findBy('id', eventGuest.guest_id)
+    let guest = yield Guest.findBy('id', eventGuest.guest_id);
     if (g.guestInfo.street != '' || null || undefined){guest.street = g.guestInfo.street};
     if (g.guestInfo.street_2 != '' || null || undefined){guest.street_2 = g.guestInfo.street_2};
     if (g.guestInfo.city != '' || null || undefined){guest.city = g.guestInfo.city};
@@ -74,7 +78,7 @@ class EventGuestController {
       home_number: guest.home_number,
       mobile_number: guest.mobile_number
       }
-      
+
     return response.json(currentGuest);
   }
 
