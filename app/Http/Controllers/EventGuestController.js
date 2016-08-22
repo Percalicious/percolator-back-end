@@ -36,7 +36,7 @@ class EventGuestController {
   * guestEventView(request, response) {
 
     // let eventGuest = request.all();
-    console.log(request);
+    // console.log(request);
     return response;
   }
 
@@ -60,7 +60,22 @@ class EventGuestController {
     if (g.guestInfo.mobile_number != '' || null || undefined){guest.mobile_number = g.guestInfo.mobile_number};
     yield guest.save();
 
-    return response.json;
+    // Add guest info to response object and return for eventual WE report lookup.
+    let currentGuest = {
+      id: guest.id,
+      first_name: guest.first_name,
+      last_name: guest.last_name,
+      email: guest.email,
+      street: guest.street,
+      street_2: guest.street_2,
+      city: guest.city,
+      state: guest.state,
+      post_code: guest.post_code,
+      home_number: guest.home_number,
+      mobile_number: guest.mobile_number
+      }
+      
+    return response.json(currentGuest);
   }
 
 }

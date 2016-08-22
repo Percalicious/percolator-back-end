@@ -27,20 +27,20 @@ class GuestController {
   }
 
   * saveWEReport(request, response){
-    let weInfo = (request.all());
+    let weInfo = (request.only('weInfo'));
+    let guestInfo = (request.only('guestInfo'));
     weInfo = JSON.stringify(weInfo);
-    // Hardcoded guest number for now to test writing to DB
-    let guest = yield Guest.findBy('id', '214');
+    let guest = yield Guest.findBy('id', guestInfo.guestInfo.id);
     guest.we_info = weInfo;
     yield guest.save();
-    console.log('********************************Guest 214');
-    console.log(guest);
   }
 
+//*********************************************************************
   * fetchWEReport(request, response){
+    // let guestID = maybe something from stateparams on FE
     let guest = yield Guest.findBy('id', '214');
-    console.log(guest);
-    console.log(guest.we_info);
+    // console.log(guest);
+    // console.log(guest.we_info);
     return response.status(201).json(guest.toJSON());
   }
 
