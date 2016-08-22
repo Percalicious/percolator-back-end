@@ -34,13 +34,9 @@ class EventGuestController {
   }
 
   * guestEventView(request, response) {
-    // console.log("Inside guestEventView");
     let uuid = request.param('uuid');
-    // console.log(uuid);
     let eventGuest = yield EventGuest.findBy('uuid', uuid);
     let event = yield Event.findBy('id', eventGuest.event_id);
-    // console.log('event');
-    console.log(event);
     return response.json(event);
   }
 

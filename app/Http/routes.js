@@ -37,9 +37,9 @@ Route.get('/event-guest/rsvp/:uuid', 'EventGuestController.guestEventView')
 Route.post('/event-guest/rsvp/:uuid', 'EventGuestController.guestEventUpdate')
 
 // Routes for Guests
-Route.get('/guests', 'GuestController.index')
+// Single host view of guest
+// Route.get('host/guests/:id', 'GuestController.index').middleware('auth')
+// Route.get('/host/guests/:id', 'GuestController.index')
 Route.post('/guests', 'GuestController.store').middleware('auth')
 Route.post('/guests/we-report', 'GuestController.saveWEReport')
-Route.get('/guests/we-report', 'GuestController.fetchWEReport')
-// Route.get('/guests', 'GuestController.index').middleware('auth')
-// Route.post('/guests', 'GuestController.store').middleware('auth')
+Route.get('/host/guests/:id', 'GuestController.fetchWEReport')

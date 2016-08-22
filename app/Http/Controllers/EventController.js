@@ -17,9 +17,7 @@ class EventController {
   * index (request, response) {
     const user = yield User.findBy('id', request.authUser.id);
     const events = yield user.events().fetch();
-
     let eventInfo = events.map(events.id);
-
     return response.json(events.toJSON());
   }
 

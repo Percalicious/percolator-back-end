@@ -5,9 +5,8 @@ const Guest = use('App/Model/Guest');
 class GuestController {
 
   * index (request, response) {
-    let guests = yield Guest.all();
-    yield response.json(guests.toJSON());
-  }
+
+  };
 
   * store(request, response) {
     // Takes guest input
@@ -35,11 +34,13 @@ class GuestController {
     yield guest.save();
   }
 
-//*********************************************************************
   * fetchWEReport(request, response){
-    // let guestID = maybe something from stateparams on FE
-    let guest = yield Guest.findBy('id', '214');
-    // console.log(guest);
+    console.log('***************************************');
+    console.log('Inside fetchWEReport');
+    let guestID = request.param('id');
+    console.log(guestID);
+    let guest = yield Guest.findBy('id', guestID);
+    console.log(guest);
     // console.log(guest.we_info);
     return response.status(201).json(guest.toJSON());
   }
