@@ -16,8 +16,7 @@ class EventController {
 
   * index (request, response) {
     const user = yield User.findBy('id', request.authUser.id);
-    const events = yield user.events().fetch();
-    let eventInfo = events.map(events.id);
+    const events = yield user.events().with("event_guest").fetch();
     return response.json(events.toJSON());
   }
 
@@ -72,9 +71,13 @@ class EventController {
       // console.log('frontEndRequest._body:');
       // console.log(frontEndRequest._body);
 
+
     request({
       method: 'POST',
-      uri: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
+      // Sandbox API Environment (Random Fake Data)
+      // url: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
+      // Production API Environment (Real Data)
+      url: 'https://api.wealthengine.com/v1/profile/find_one/by_address/full',
       json: true,
       headers: {
         Authorization: 'APIKey '+Env.get('WEALTHENGINE_TOKEN')
