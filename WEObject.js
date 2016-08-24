@@ -5,7 +5,7 @@ if (weInfo){
   weInfo = {};
 };
 
-    if weInfo.relationship){
+    if (weInfo.relationship){
       weInfo.relationship = weInfo.relationship;
     }else{
       weInfo.relationship = {};
@@ -47,61 +47,61 @@ if (weInfo){
               weInfo.relationship.spouse.middle_name = 'Not Available';
             };
 
-    if weInfo.id){
+    if (weInfo.id){
       weInfo.id = weInfo.id;
     }else{
       weInfo.id = 0;
     };
 
-    if weInfo.realestate){
+    if (weInfo.realestate){
       weInfo.realestate = weInfo.realestate;
     }else{
       weInfo.realestate = {};
     };
 
-        if weInfo.realestate.total_num_properties){
+        if (weInfo.realestate.total_num_properties){
           weInfo.realestate.total_num_properties = weInfo.realestate.total_num_properties;
         }else{
           weInfo.realestate.total_num_properties = 'Not Available';
         };
 
-        if weInfo.realestate.total_realestate_value){
+        if (weInfo.realestate.total_realestate_value){
           weInfo.realestate.total_realestate_value = weInfo.realestate.total_realestate_value;
         }else{
           weInfo.realestate.total_realestate_value = {};
         };
 
-            if weInfo.realestate.total_realestate_value.min){
+            if (weInfo.realestate.total_realestate_value.min){
               weInfo.realestate.total_realestate_value.min = weInfo.realestate.total_realestate_value.min;
             }else{
               weInfo.realestate.total_realestate_value.min = 0;
             };
 
-            if weInfo.realestate.total_realestate_value.max){
+            if (weInfo.realestate.total_realestate_value.max){
               weInfo.realestate.total_realestate_value.max = weInfo.realestate.total_realestate_value.max;
             }else{
               weInfo.realestate.total_realestate_value.max = 0;
             };
 
-            if weInfo.realestate.total_realestate_value.value){
+            if (weInfo.realestate.total_realestate_value.value){
               weInfo.realestate.total_realestate_value.value = weInfo.realestate.total_realestate_value.value;
             }else{
               weInfo.realestate.total_realestate_value.value = 0;
             };
 
-            if weInfo.realestate.total_realestate_value.text_low){
+            if (weInfo.realestate.total_realestate_value.text_low){
               weInfo.realestate.total_realestate_value.text_low = weInfo.realestate.total_realestate_value.text_low;
             }else{
               weInfo.realestate.total_realestate_value.text_low = '';
             };
 
-            if weInfo.realestate.total_realestate_value.text_high){
+            if (weInfo.realestate.total_realestate_value.text_high){
               weInfo.realestate.total_realestate_value.text_high = weInfo.realestate.total_realestate_value.text_high;
             }else{
               weInfo.realestate.total_realestate_value.text_high = '';
             };
 
-            if weInfo.realestate.total_realestate_value.text){
+            if (weInfo.realestate.total_realestate_value.text){
               weInfo.realestate.total_realestate_value.text = weInfo.realestate.total_realestate_value.text;
             }else{
               weInfo.realestate.total_realestate_value.text = '';
