@@ -37,7 +37,12 @@ class GuestController {
   * fetchWEReport(request, response){
     let guestID = request.param('id');
     let guest = yield Guest.findBy('id', guestID);
-    let weInfo = JSON.parse(guest.we_info);
+    console.log(guest.we_info);
+    if (Env.get("NODE_ENV") === "development") {
+      let weInfo = JSON.parse(guest.we_info);
+    } else {
+      let weInfo = guest.we_info;
+    }
     if (weInfo === undefined){
       weInfo = {};
     };
