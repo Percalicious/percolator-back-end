@@ -40,9 +40,9 @@ class GuestController {
     let guest = yield Guest.findBy('id', guestID);
     console.log(guest.we_info);
     if (Env.get("NODE_ENV") === "development") {
-      let weInfo = JSON.parse(guest.we_info);
+      var weInfo = JSON.parse(guest.we_info);
     } else {
-      let weInfo = guest.we_info;
+      var weInfo = guest.we_info;
     }
     if (weInfo === undefined){
       weInfo = {};
