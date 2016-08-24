@@ -44,7 +44,6 @@ class EventGuestController {
     let eg = request.only('egInfo');
     let g = request.only('guestInfo');
     let uuid = request.param('uuid');
-
     let eventGuest = yield EventGuest.findBy('uuid', uuid);
     if (eg.egInfo.rsvp != '' || null || undefined){eventGuest.rsvp = eg.egInfo.rsvp};
     if (eg.egInfo.rsvp_details != '' || null || undefined){eventGuest.rsvp_details = eg.egInfo.rsvp_details};
@@ -74,7 +73,6 @@ class EventGuestController {
       home_number: guest.home_number,
       mobile_number: guest.mobile_number
       }
-
     return response.json(currentGuest);
   }
 
