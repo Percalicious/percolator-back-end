@@ -38,7 +38,6 @@ class GuestController {
     let guestID = request.param('id');
     let guest = yield Guest.findBy('id', guestID);
     let weInfo = JSON.parse(guest.we_info);
-
     if (weInfo === undefined){
       weInfo = {};
     };
@@ -163,8 +162,8 @@ class GuestController {
               weInfo.weInfo.identity.emails = [];
             };
 
-                if (weInfo.weInfo.identity.emails[0].email  === undefined){
-                  weInfo.weInfo.identity.emails[0].email = 'Not Available';
+                if (weInfo.weInfo.identity.emails.email  === undefined){
+                  weInfo.weInfo.identity.emails.email = 'Not Available';
                 };
 
         if (weInfo.weInfo.jobs  === undefined){

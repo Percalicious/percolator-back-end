@@ -78,9 +78,9 @@ class EventController {
     request({
       method: 'POST',
       // Sandbox API Environment (Random Fake Data)
-      url: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
+      // url: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
       // Production API Environment (Real Data)
-      // url: 'https://api.wealthengine.com/v1/profile/find_one/by_address/full',
+      url: 'https://api.wealthengine.com/v1/profile/find_one/by_address/full',
       json: true,
       headers: {
         Authorization: 'APIKey '+Env.get('WEALTHENGINE_TOKEN')
