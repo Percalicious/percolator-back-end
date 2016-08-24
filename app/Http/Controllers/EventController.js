@@ -20,13 +20,19 @@ class EventController {
     return response.json(events.toJSON());
   }
 
+  * createInit(request, response){
+    const user = yield User.findBy('id', request.authUser.id);
+    return response.json(user.toJSON());
+  }
+
   * store(request, response) {
+    // Grabs the user information
+    const user = yield User.findBy('id', request.authUser.id);
     // Takes event input
     const eventInfo = request.all();
 
     try {
         eventInfo.user_id = request.authUser.id;
-        const newEvent = yield Event.create(eventInfo);
         // Respond with updated user and address information in JSON object
         return response.status(201).json(newEvent.toJSON());
     } catch (e) {
@@ -38,6 +44,7 @@ class EventController {
   }
 
   * userSingleEvent (request, response) {
+    const user = yield User.findBy('id', request.authUser.id);
     let singleEvent = yield Event.findBy('id', request.param('id'));
     let rsvpInfo = yield singleEvent.event_guest().fetch();
     let guestsOfEvent = yield EventGuest.query().where('event_id', request.param('id')).fetch();
@@ -49,7 +56,8 @@ class EventController {
     let totalResp = {
       allGuests: allGuests,
       eventInfo: singleEvent,
-      rsvpInfo: rsvpInfo
+      rsvpInfo: rsvpInfo,
+      user: user
     }
     return response.json(totalResp);
   }
@@ -62,22 +70,16 @@ class EventController {
 
   * sendEmail (request, response) {
         mailgun.messages().send(request._body, function(error, body){
-          // console.log(body);
         });
-        // console.log(response);
   }
 
   * runWEReport(frontEndRequest, response) {
-      // console.log('frontEndRequest._body:');
-      // console.log(frontEndRequest._body);
-
-
     request({
       method: 'POST',
       // Sandbox API Environment (Random Fake Data)
-      // url: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
+      url: 'https://api-sandbox.wealthengine.com/v1/profile/find_one/by_address/full',
       // Production API Environment (Real Data)
-      url: 'https://api.wealthengine.com/v1/profile/find_one/by_address/full',
+      // url: 'https://api.wealthengine.com/v1/profile/find_one/by_address/full',
       json: true,
       headers: {
         Authorization: 'APIKey '+Env.get('WEALTHENGINE_TOKEN')
@@ -88,11 +90,10 @@ class EventController {
       if (error) {
         return console.error('upload failed:', error);
       }
-      console.log('Upload successful!  Server responded with:');
-
       // Following line works for return to front end************************
       response.send(body);
   })
+
   }
 }
 
