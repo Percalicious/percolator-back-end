@@ -3,7 +3,6 @@ const crypto = require('crypto');
 const EventGuest = use('App/Model/EventGuest');
 const Guest = use('App/Model/Guest');
 const Event = use('App/Model/Event');
-const Env = use("Env");
 
 class EventGuestController {
 

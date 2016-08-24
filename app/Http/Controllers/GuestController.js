@@ -1,6 +1,7 @@
 'use strict';
 
 const Guest = use('App/Model/Guest');
+const Env = use("Env");
 
 class GuestController {
 
