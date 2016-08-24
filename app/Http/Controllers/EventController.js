@@ -33,6 +33,7 @@ class EventController {
 
     try {
         eventInfo.user_id = request.authUser.id;
+        const newEvent = yield Event.create(eventInfo);
         // Respond with updated user and address information in JSON object
         return response.status(201).json(newEvent.toJSON());
     } catch (e) {
